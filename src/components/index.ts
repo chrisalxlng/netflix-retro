@@ -1,2 +1,2 @@
-export * from './ColorSchemeToggle/ColorSchemeToggle';
-export * from './Welcome/Welcome';
+export * from './RetroBlock/RetroBlock';
+export * from './Logo/Logo';

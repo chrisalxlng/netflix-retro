@@ -1,10 +1,5 @@
-import { ColorSchemeToggle, Welcome } from '@src/core';
+import { LandingPage } from '@src/pages';
 
 export default function HomePage() {
-  return (
-    <>
-      <Welcome />
-      <ColorSchemeToggle />
-    </>
-  );
+  return <LandingPage />;
 }
