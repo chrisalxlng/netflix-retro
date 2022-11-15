@@ -6,12 +6,13 @@ import {
   findMostBingedShows,
   findMostWatchedShows,
   getTotalPlaybacksAndShowsWatched,
-  generateImageFromComponent,
   downloadImage,
-  shareURL,
+  shareFiles,
+  generateImageFileFromURL,
+  generateImageURLFromComponent,
 } from '@src/util';
 import { IconDownload, IconShare } from '@tabler/icons';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import useStyles from './SummaryBlock.styles';
 
 type SummaryBlockProps = {
@@ -23,6 +24,8 @@ type RetroCardProps = {
   shows: Show[];
   year: number;
 };
+
+const PAGE_URL = 'https://netflixretro.vercel.app';
 
 const RetroCard = ({ shows, year }: RetroCardProps) => {
   const { classes } = useStyles();
@@ -70,11 +73,20 @@ const RetroCard = ({ shows, year }: RetroCardProps) => {
         </Text>
       </Text>
       <Space h="xl" />
-      <Group position="right" spacing="xs">
-        <Text color="white" inline size="xs">
+      <Group position="right" spacing={5}>
+        <Text color="white" inline size="xs" pb={5}>
           provided by
         </Text>
         <Logo size={20} />
+      </Group>
+      <Space h={5} />
+      <Group position="right" spacing="xs">
+        <Text color="white" inline size="xs">
+          Get your own at:{' '}
+          <Text span inherit color="red">
+            {PAGE_URL}
+          </Text>
+        </Text>
       </Group>
     </RetroBlock.Card>
   );
@@ -82,6 +94,7 @@ const RetroCard = ({ shows, year }: RetroCardProps) => {
 
 export const SummaryBlock = ({ shows, year }: SummaryBlockProps) => {
   const retroCardRef = useRef(null);
+  const [loading, setLoading] = useState(false);
 
   const os = useOs();
   const isMobileDevice = os === 'android' || os === 'ios';
@@ -101,13 +114,19 @@ export const SummaryBlock = ({ shows, year }: SummaryBlockProps) => {
         <Button
           leftIcon={<IconShare size={14} />}
           onClick={async () => {
-            const imageURL = await generateImageFromComponent(retroCardRef);
-            shareURL({
-              title: `My Nextflix Retrospective ${year}`,
-              text: `See which shows you have watched the most on Netflix in ${year}!`,
-              url: imageURL,
-            });
+            setLoading(true);
+            const imageURL = await generateImageURLFromComponent(retroCardRef);
+            const imageFile = await generateImageFileFromURL(imageURL, `netflix-retro-${year}.jpg`);
+            try {
+              shareFiles({
+                files: [imageFile],
+              });
+            } catch (error) {
+              downloadImage(imageURL, `netflix-retro-${year}.jpg`);
+            }
+            setLoading(false);
           }}
+          loading={loading}
         >
           Share summary
         </Button>
@@ -115,9 +134,12 @@ export const SummaryBlock = ({ shows, year }: SummaryBlockProps) => {
         <Button
           leftIcon={<IconDownload size={14} />}
           onClick={async () => {
-            const imageURL = await generateImageFromComponent(retroCardRef);
+            setLoading(true);
+            const imageURL = await generateImageURLFromComponent(retroCardRef);
             downloadImage(imageURL, `netflix-retro-${year}.jpg`);
+            setLoading(false);
           }}
+          loading={loading}
         >
           Download summary
         </Button>

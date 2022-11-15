@@ -16,7 +16,7 @@ export default createStyles(() => ({
 
   content: {
     ' > *': {
-      paddingBottom: 160,
+      paddingBottom: 100,
     },
   },
 }));

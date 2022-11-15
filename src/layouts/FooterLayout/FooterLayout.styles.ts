@@ -8,14 +8,7 @@ export default createStyles((theme) => ({
   },
 
   inner: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'end',
     paddingTop: theme.spacing.xl,
     paddingBottom: theme.spacing.xl,
-
-    [theme.fn.smallerThan('xs')]: {
-      flexDirection: 'column',
-    },
   },
 }));

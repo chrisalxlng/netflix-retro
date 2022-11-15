@@ -1,5 +1,5 @@
 import { Card, Container, Text } from '@mantine/core';
-import { useIntersection } from '@mantine/hooks';
+import { useIntersection, useMediaQuery } from '@mantine/hooks';
 import { ReactNode, useEffect, useState } from 'react';
 import useStyles from './RetroBlock.styles';
 
@@ -25,6 +25,7 @@ type RetroBlockCardProps = {
   children: ReactNode[] | ReactNode;
   className?: string;
 };
+const INTERSECTION_THRESHOLD = 0.1;
 
 export const RetroBlock = ({ children }: RetroBlockProps) => {
   const { classes } = useStyles();
@@ -40,9 +41,10 @@ RetroBlock.Heading = ({
 }: RetroBlockHeadingProps) => {
   const { classes, cx } = useStyles();
   const { ref, entry } = useIntersection({
-    threshold: 1,
+    threshold: INTERSECTION_THRESHOLD,
   });
   const [intersected, setIntersected] = useState(false);
+  const isSmallScreen = useMediaQuery('(max-width: 500px)');
 
   useEffect(() => {
     if (entry?.isIntersecting) setIntersected(true);
@@ -58,7 +60,7 @@ RetroBlock.Heading = ({
       span={inline}
       inherit={inline}
       color={accent ? 'red' : 'dark'}
-      size={50}
+      size={isSmallScreen ? 35 : 50}
       weight="bolder"
       align="center"
     >
@@ -75,9 +77,10 @@ RetroBlock.Subheading = ({
 }: RetroBlockSubheadingProps) => {
   const { classes, cx } = useStyles();
   const { ref, entry } = useIntersection({
-    threshold: 1,
+    threshold: INTERSECTION_THRESHOLD,
   });
   const [intersected, setIntersected] = useState(false);
+  const isSmallScreen = useMediaQuery('(max-width: 500px)');
 
   useEffect(() => {
     if (entry?.isIntersecting) setIntersected(true);
@@ -93,7 +96,7 @@ RetroBlock.Subheading = ({
       span={inline}
       inherit={inline}
       color={accent ? 'red' : 'dark'}
-      size={37}
+      size={isSmallScreen ? 25 : 37}
       weight="bold"
       align="center"
     >

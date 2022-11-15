@@ -4,7 +4,7 @@ export default createStyles((theme) => ({
   hero: {
     position: 'relative',
     padding: `180px ${theme.spacing.xl}px 130px ${theme.spacing.xl}px`,
-    backgroundImage: 'url(img/hero-background.jpg)',
+    backgroundImage: 'url(assets/hero-background.jpg)',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
 

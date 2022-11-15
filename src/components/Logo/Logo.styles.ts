@@ -12,6 +12,10 @@ export default createStyles(() => {
   });
 
   return {
+    hidden: {
+      display: 'none',
+    },
+
     transparent: {
       display: 'none',
       opacity: 0,

@@ -20,7 +20,7 @@ export const TotalPlaybacksBlock = ({ shows, year }: TotalPlaybacksBlockProps) =
         different shows or movies.
       </RetroBlock.Heading>
       <RetroBlock.Subheading>
-        That are{' '}
+        Resulting in{' '}
         <RetroBlock.Subheading accent inline>
           {playbackCount}
         </RetroBlock.Subheading>{' '}

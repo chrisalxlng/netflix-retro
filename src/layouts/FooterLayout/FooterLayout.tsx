@@ -1,4 +1,4 @@
-import { Container, Stack, Text } from '@mantine/core';
+import { Container, Group, Space, Text } from '@mantine/core';
 import { Logo } from '@src/core';
 import dayjs from 'dayjs';
 
@@ -11,15 +11,16 @@ export const FooterLayout = () => {
   return (
     <div className={classes.footer}>
       <Container className={classes.inner}>
-        <Stack>
-          <Logo size={28} />
+        <Logo size={28} />
+        <Space h="md" />
+        <Group position="apart">
           <Text color="white" size="xs">
             An unofficial retrospective of your Netflix viewing history.
           </Text>
-        </Stack>
-        <Text color="white" size="xs">
-          &copy; {year} Christopher Lang
-        </Text>
+          <Text color="white" size="xs">
+            &copy; {year} Christopher Lang
+          </Text>
+        </Group>
       </Container>
     </div>
   );

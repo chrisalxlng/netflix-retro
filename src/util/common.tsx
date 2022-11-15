@@ -1,5 +1,3 @@
-import { showNotification } from '@mantine/notifications';
-import { IconX } from '@tabler/icons';
 import { parse } from 'csv-parse/sync';
 import html2canvas from 'html2canvas';
 
@@ -39,25 +37,31 @@ export const findMostOccuringElementsInArray = <T extends unknown>(
   };
 };
 
-export const generateImageFromComponent = async (ref: any): Promise<string> => {
+export const generateImageURLFromComponent = async (ref: any): Promise<string> => {
   const element = ref.current;
   const canvas = await html2canvas(element, { backgroundColor: 'black', scale: 5 });
   return canvas.toDataURL('image/jpg');
 };
 
+export const generateImageFileFromURL = async (imageURL: string, name: string): Promise<File> => {
+  const blob = await (await fetch(imageURL)).blob();
+  return new File([blob], name, {
+    type: blob.type,
+    lastModified: new Date().getTime(),
+  });
+};
+
 export const isImageSharable = (imageURL: string): boolean => navigator.canShare({ url: imageURL });
 
-export const shareURL = (data: { title?: string; text?: string; url: string }): void => {
-  if (isImageSharable(data.url)) navigator.share(data);
-  else {
-    showNotification({
-      title: 'URL Sharing Error',
-      message: 'URL could not be shared via Web Share API.',
-      color: 'red',
-      autoClose: false,
-      icon: <IconX />,
-    });
-  }
+export const shareFiles = (data: {
+  title?: string;
+  text?: string;
+  files: File[];
+}): Promise<void> => {
+  if (navigator.canShare({ files: data.files })) return navigator.share(data);
+  return new Promise((_, reject) => {
+    reject(new Error('URL could not be shared via Web Share API.'));
+  });
 };
 
 export const downloadImage = (imageURL: string, fileName: string = 'image'): void => {

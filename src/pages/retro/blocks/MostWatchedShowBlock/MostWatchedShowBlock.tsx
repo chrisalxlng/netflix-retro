@@ -26,7 +26,9 @@ export const MostWatchedShowBlock = ({ shows, year }: MostWatchedShowBlockProps)
         </RetroBlock.Heading>
         .
       </RetroBlock.Heading>
-      <RetroBlock.Subheading>Making it your most watched show in {year}.</RetroBlock.Subheading>
+      <RetroBlock.Subheading>
+        Giving it the title of your most watched show in {year}.
+      </RetroBlock.Subheading>
     </RetroBlock>
   );
 };
