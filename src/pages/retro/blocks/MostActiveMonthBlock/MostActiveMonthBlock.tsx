@@ -18,7 +18,7 @@ export const MostActiveMonthBlock = ({ shows, year }: MostActiveMonthBlockProps)
         <RetroBlock.Heading accent inline>
           {months}
         </RetroBlock.Heading>
-        , you have watched{' '}
+        , you watched{' '}
         <RetroBlock.Heading accent inline>
           {playbackCount}
         </RetroBlock.Heading>{' '}

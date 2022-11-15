@@ -32,7 +32,7 @@ export const RetroPage = () => {
       <div className={classes.container}>
         <TotalPlaybacksBlock shows={filteredShows} year={latestRetroYear} />
         <MostActiveMonthBlock shows={filteredShows} year={latestRetroYear} />
-        <MostBingedShowBlock shows={filteredShows} />
+        <MostBingedShowBlock shows={filteredShows} year={latestRetroYear} />
         <MostWatchedShowBlock shows={filteredShows} year={latestRetroYear} />
         <SummaryBlock shows={filteredShows} year={latestRetroYear} />
       </div>

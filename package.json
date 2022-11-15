@@ -1,6 +1,6 @@
 {
   "name": "netflix-retro",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -48,6 +48,7 @@
     "@babel/core": "^7.19.3",
     "@next/eslint-plugin-next": "^12.3.1",
     "@storybook/react": "^6.5.12",
+    "@svgr/webpack": "^6.5.1",
     "@testing-library/dom": "^8.19.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

@@ -21,10 +21,10 @@ const Header = ({ logoCondensed = false }: HeaderProps) => {
 
   return (
     <MantineHeader className={classes.header} height={HEADER_HEIGHT} withBorder={false}>
-      <Group className={classes.container} align="center" px="md" py={5}>
+      <Group className={classes.container} align="center" px="md" py="xs">
         <Link href="/" passHref>
           <Box component="a" className={classes.logo}>
-            <Logo condensed={logoCondensed} />
+            <Logo condensed={logoCondensed} enableAnimation />
           </Box>
         </Link>
       </Group>

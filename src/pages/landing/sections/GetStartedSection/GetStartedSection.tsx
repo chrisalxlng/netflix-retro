@@ -1,4 +1,5 @@
 import { Button, Container, FileButton, Image, Text } from '@mantine/core';
+import { useMediaQuery, useOs } from '@mantine/hooks';
 import { useShow } from '@src/hooks';
 import { RawNetflixCSV } from '@src/types';
 import { formatNetflixCSV, groupNetflixCSVByTitle, parseCSV } from '@src/util';
@@ -23,6 +24,12 @@ type SectionHeadingProps = {
 type SectionTextProps = {
   children: ReactNode[] | ReactNode;
 };
+
+enum DeviceType {
+  Phone,
+  Tablet,
+  Desktop,
+}
 
 const Section = ({ children, size = 700 }: SectionProps) => {
   const { classes } = useStyles();
@@ -52,7 +59,24 @@ export const GetStartedSection = ({ scrollTargetRef }: GetStartedSectionProps) =
   const { classes } = useStyles();
   const { push } = useRouter();
   const { setShows } = useShow();
+  const os = useOs();
   const [loading, setLoading] = useState(false);
+  const isSmallScreen = useMediaQuery('(max-width: 500px)');
+  const isMobileDevice = os === 'android' || os === 'ios';
+
+  const getDeviceType = (): DeviceType => {
+    const isPhone = isMobileDevice && isSmallScreen;
+    const isTablet = isMobileDevice && !isSmallScreen;
+    if (isPhone) return DeviceType.Phone;
+    if (isTablet) return DeviceType.Tablet;
+    return DeviceType.Desktop;
+  };
+
+  const imageSrcSuffixes = {
+    [DeviceType.Phone]: 'phone.jpg',
+    [DeviceType.Tablet]: 'tablet.jpg',
+    [DeviceType.Desktop]: 'desktop.png',
+  };
 
   const handleFileOnChange = async (file: File) => {
     setLoading(true);
@@ -109,7 +133,10 @@ export const GetStartedSection = ({ scrollTargetRef }: GetStartedSectionProps) =
                 Visit Netflix viewing activity page
               </Button>
             </div>
-            <Image className={classes.image} src="img/download-viewing-activity.png" />
+            <Image
+              className={classes.image}
+              src={`assets/download-viewing-activity-${imageSrcSuffixes[getDeviceType()]}`}
+            />
           </Section.TwoColumns>
         </Section>
         <Section size={1400}>
@@ -135,7 +162,10 @@ export const GetStartedSection = ({ scrollTargetRef }: GetStartedSectionProps) =
                 )}
               </FileButton>
             </div>
-            <Image className={classes.image} src="img/upload-viewing-history.png" />
+            <Image
+              className={classes.image}
+              src={`assets/upload-viewing-activity-${imageSrcSuffixes[getDeviceType()]}`}
+            />
           </Section.TwoColumns>
         </Section>
       </Container>
