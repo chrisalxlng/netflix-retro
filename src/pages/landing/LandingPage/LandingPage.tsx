@@ -9,8 +9,8 @@ export const LandingPage = () => {
 
   return (
     <PageLayout>
-      <HeroSection scrollToTarget={handleScrollToTarget} />
-      <GetStartedSection scrollTargetRef={targetRef} />
+      <HeroSection scrollToGetStartedTarget={handleScrollToTarget} />
+      <GetStartedSection getStartedTargetRef={targetRef} />
     </PageLayout>
   );
 };

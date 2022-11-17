@@ -70,7 +70,7 @@ export const findMostBingedShows = (
     });
     tempStore.forEach((entry) =>
       store.push({
-        title: show.title,
+        title: show?.title,
         dayCount: entry.dates.length,
         playbackCount: entry.playbackCount,
         episodesPerDay: entry.playbackCount / entry.dates.length,
@@ -81,9 +81,10 @@ export const findMostBingedShows = (
     (previous, current) => current.episodesPerDay - previous.episodesPerDay
   );
   const mostBingedShow = sortedStore[0];
+
   return {
-    title: mostBingedShow.title,
-    dayCount: mostBingedShow.dayCount,
-    playbackCount: mostBingedShow.playbackCount,
+    title: mostBingedShow?.title,
+    dayCount: mostBingedShow?.dayCount,
+    playbackCount: mostBingedShow?.playbackCount,
   };
 };

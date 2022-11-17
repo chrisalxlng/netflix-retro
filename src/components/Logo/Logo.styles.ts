@@ -19,13 +19,21 @@ export default createStyles(() => {
     transparent: {
       display: 'none',
       opacity: 0,
-      animation: `${fadeToTransparency} 0.3s ease-in-out forwards`,
+
+      // query to target non-iOS-Safari browsers
+      '@supports not (-webkit-touch-callout: none)': {
+        animation: `${fadeToTransparency} 0.6s ease-in-out forwards`,
+      },
     },
 
     visible: {
       display: 'block',
       opacity: 1,
-      animation: `${fadeToVisibility} 0.3s ease-in-out forwards`,
+
+      // query to target non-iOS-Safari browsers
+      '@supports not (-webkit-touch-callout: none)': {
+        animation: `${fadeToVisibility} 0.6s ease-in-out forwards`,
+      },
     },
   };
 });

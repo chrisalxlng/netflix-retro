@@ -6,25 +6,23 @@ import { ReactNode } from 'react';
 import { FooterLayout } from '../FooterLayout/FooterLayout';
 import useStyles from './PageLayout.styles';
 
-type HeaderProps = {
-  logoCondensed?: boolean;
-};
-
 type PageLayoutProps = {
   children: ReactNode[] | ReactNode;
 };
 
 const HEADER_HEIGHT = 50;
 
-const Header = ({ logoCondensed = false }: HeaderProps) => {
+const Header = () => {
   const { classes } = useStyles();
+  const [scroll] = useWindowScroll();
+  const isScrolledBeyondBoundary = scroll.y > HEADER_HEIGHT;
 
   return (
     <MantineHeader className={classes.header} height={HEADER_HEIGHT} withBorder={false}>
       <Group className={classes.container} align="center" px="md" py="xs">
         <Link href="/" passHref>
           <Box component="a" className={classes.logo}>
-            <Logo condensed={logoCondensed} enableAnimation />
+            <Logo condensed={isScrolledBeyondBoundary} enableAnimation />
           </Box>
         </Link>
       </Group>
@@ -34,12 +32,10 @@ const Header = ({ logoCondensed = false }: HeaderProps) => {
 
 export const PageLayout = ({ children }: PageLayoutProps) => {
   const { classes } = useStyles();
-  const [scroll] = useWindowScroll();
-  const isVerticallyScrolled = scroll.y > HEADER_HEIGHT;
 
   return (
     <AppShell
-      header={<Header logoCondensed={isVerticallyScrolled} />}
+      header={<Header />}
       footer={<FooterLayout />}
       padding={0}
       sx={{ marginTop: -HEADER_HEIGHT }}

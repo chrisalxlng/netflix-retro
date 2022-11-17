@@ -37,11 +37,11 @@ export default createStyles((theme) => ({
   },
 
   image: {
-    boxShadow: `5px 5px 20px 3px ${theme.colors.gray[7]}`,
     borderRadius: 5,
 
     'figure img': {
       borderRadius: 5,
+      boxShadow: `5px 5px 20px 3px ${theme.colors.gray[7]}`,
     },
   },
 }));

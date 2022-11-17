@@ -7,10 +7,10 @@ import { IconExternalLink, IconPlayerPlay, IconX } from '@tabler/icons';
 import useStyles from './HeroSection.styles';
 
 type HeroSectionProps = {
-  scrollToTarget: () => void;
+  scrollToGetStartedTarget: () => void;
 };
 
-export const HeroSection = ({ scrollToTarget }: HeroSectionProps) => {
+export const HeroSection = ({ scrollToGetStartedTarget }: HeroSectionProps) => {
   const { classes, cx } = useStyles();
   const { setShows, latestRetroYear } = useShow();
 
@@ -58,7 +58,7 @@ export const HeroSection = ({ scrollToTarget }: HeroSectionProps) => {
             gradient={{ from: '#E50914', to: 'red' }}
             size="lg"
             leftIcon={<IconPlayerPlay size={14} />}
-            onClick={scrollToTarget}
+            onClick={scrollToGetStartedTarget}
           >
             Get started
           </Button>

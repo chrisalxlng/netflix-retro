@@ -10,8 +10,9 @@ export const MissingDataPage = () => {
       <Container>
         <Title className={classes.title}>Missing Data</Title>
         <Text color="dimmed" size="lg" align="center" className={classes.description}>
-          Unfortunately, this page cannot be visited right now. You may have manually typed in this
-          address, therefore skipping to provide necessary data.
+          Unfortunately, this page cannot be visited right now. You may have uploaded a file in an
+          unsupported language or manually typed in this address, therefore skipping to provide
+          necessary data.
         </Text>
         <Group position="center">
           <Link href="/" passHref>

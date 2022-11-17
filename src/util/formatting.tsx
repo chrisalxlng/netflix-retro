@@ -1,4 +1,6 @@
+import { showNotification } from '@mantine/notifications';
 import { FormattedNetflixCSV, RawNetflixCSV, Show, ShowDateRange, ShowDateSpot } from '@src/types';
+import { IconX } from '@tabler/icons';
 import dayjs, { Dayjs } from 'dayjs';
 import CustomParseFormat from 'dayjs/plugin/customParseFormat';
 import IsBetween from 'dayjs/plugin/isBetween';
@@ -24,10 +26,23 @@ const formatTitle = (title: string) => {
 
 export const formatNetflixCSV = (csv: RawNetflixCSV[]): FormattedNetflixCSV[] => {
   dayjs.extend(CustomParseFormat);
-  return csv.map((item) => ({
+  const formattedCSV = csv.map((item) => ({
     title: formatTitle(item.Title.replaceAll('"', '')),
-    date: dayjs(item.Date.replaceAll('"', ''), 'DD/MM/YYYY'),
+    date: dayjs(item.Date.replaceAll('"', ''), ['DD/MM/YYYY', 'DD.MM.YY']),
   }));
+  try {
+    const areDatesValid = formattedCSV[0]?.date.isValid();
+    if (areDatesValid) return formattedCSV;
+  } catch {
+    showNotification({
+      title: 'Date Formatting Error',
+      message: 'Dates could not be formatted successfully.',
+      color: 'red',
+      autoClose: false,
+      icon: <IconX />,
+    });
+  }
+  return [];
 };
 
 export const groupNetflixCSVByTitle = (list: FormattedNetflixCSV[]): Show[] =>

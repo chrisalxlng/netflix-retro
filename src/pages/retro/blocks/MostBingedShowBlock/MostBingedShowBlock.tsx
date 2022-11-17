@@ -10,6 +10,7 @@ type MostBingedShowBlockProps = {
 export const MostBingedShowBlock = ({ shows, year }: MostBingedShowBlockProps) => {
   const { title, dayCount, playbackCount } = findMostBingedShows(shows);
   const episodes = playbackCount === 1 ? 'episode' : 'episodes';
+  const days = dayCount === 1 ? 'day' : 'days';
 
   return (
     <RetroBlock>
@@ -28,7 +29,7 @@ export const MostBingedShowBlock = ({ shows, year }: MostBingedShowBlockProps) =
           {' '}
           {dayCount}
         </RetroBlock.Heading>{' '}
-        days.
+        {days}.
       </RetroBlock.Heading>
       <RetroBlock.Subheading>
         Therefore, it is the show you binged the hardest in {year}.
