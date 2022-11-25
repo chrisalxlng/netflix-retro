@@ -77,3 +77,6 @@ export const downloadImage = (imageURL: string, fileName: string = 'image'): voi
     window.open(imageURL);
   }
 };
+
+export const uniquifyArray = <T extends unknown>(array: T[]): T[] =>
+  [...new Set(array.map((entry) => JSON.stringify(entry)))].map((entry) => JSON.parse(entry));

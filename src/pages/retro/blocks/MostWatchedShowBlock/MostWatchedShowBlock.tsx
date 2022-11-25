@@ -8,7 +8,7 @@ type MostWatchedShowBlockProps = {
 };
 
 export const MostWatchedShowBlock = ({ shows, year }: MostWatchedShowBlockProps) => {
-  const [mostWatchedShow] = findMostWatchedShows(shows, 1);
+  const [mostWatchedShow] = findMostWatchedShows({ shows, count: 1 });
   const mostWatchedShowTitle = mostWatchedShow?.title;
   const playbackCount = mostWatchedShow?.playbackCount;
   const episodes = playbackCount === 1 ? 'episode' : 'episodes';

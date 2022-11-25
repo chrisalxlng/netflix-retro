@@ -29,9 +29,10 @@ const PAGE_URL = 'https://netflixretro.vercel.app';
 
 const RetroCard = ({ shows, year }: RetroCardProps) => {
   const { classes } = useStyles();
-  const mostWatchedShows = findMostWatchedShows(shows, 5);
+  const mostWatchedShows = findMostWatchedShows({ shows, count: 5 });
   const { playbackCount, showCount } = getTotalPlaybacksAndShowsWatched(shows);
-  const { title } = findMostBingedShows(shows);
+  const [mostBingedShow] = findMostBingedShows({ shows, count: 1 });
+  const { title } = mostBingedShow;
 
   return (
     <RetroBlock.Card className={classes.card}>

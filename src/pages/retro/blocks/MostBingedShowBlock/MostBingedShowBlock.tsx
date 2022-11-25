@@ -8,7 +8,8 @@ type MostBingedShowBlockProps = {
 };
 
 export const MostBingedShowBlock = ({ shows, year }: MostBingedShowBlockProps) => {
-  const { title, dayCount, playbackCount } = findMostBingedShows(shows);
+  const [mostBingedShow] = findMostBingedShows({ shows, count: 1 });
+  const { title, dayCount, playbackCount } = mostBingedShow;
   const episodes = playbackCount === 1 ? 'episode' : 'episodes';
   const days = dayCount === 1 ? 'day' : 'days';
 

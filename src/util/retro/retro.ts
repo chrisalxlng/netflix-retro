@@ -1,18 +1,22 @@
-import { Show } from '@src/types';
+import {
+  FindMostBingedShowsArguments,
+  FindMostWatchedShowsArguments,
+  MostActiveMonths,
+  MostBingedShow,
+  MostWatchedShow,
+  Show,
+  TotalPlaybacksAndShowsWatched,
+} from '@src/types';
 import { Dayjs } from 'dayjs';
-import { findMostOccuringElementsInArray } from '@src/util';
+import { findMostOccuringElementsInArray, uniquifyArray } from '@src/util';
 
-export const getTotalPlaybacksAndShowsWatched = (
-  shows: Show[]
-): { playbackCount: number; showCount: number } => ({
+export const getTotalPlaybacksAndShowsWatched = (shows: Show[]): TotalPlaybacksAndShowsWatched => ({
   playbackCount: shows.reduce((count, show) => count + show.dates.length, 0),
   showCount: shows.length,
 });
 
-export const findMostWatchedShows = (
-  shows: Show[],
-  count?: number
-): { title: string; playbackCount: number }[] => {
+export const findMostWatchedShows = (args: FindMostWatchedShowsArguments): MostWatchedShow[] => {
+  const { shows, count } = args;
   const sortedShows = shows.sort(
     (previous, current) => current.dates.length - previous.dates.length
   );
@@ -24,9 +28,7 @@ export const findMostWatchedShows = (
   return formattedShows.slice(0, count);
 };
 
-export const findMostActiveMonths = (
-  shows: Show[]
-): { months: string[]; playbackCount: number } => {
+export const findMostActiveMonths = (shows: Show[]): MostActiveMonths => {
   const formattedDates = shows.flatMap((show) => show.dates.map((date) => date.format('MMMM')));
   const { elements, count } = findMostOccuringElementsInArray(formattedDates);
 
@@ -44,9 +46,8 @@ export const formatMonthListAsString = (months: string[]): string =>
     })
     .join('');
 
-export const findMostBingedShows = (
-  shows: Show[]
-): { title: string; dayCount: number; playbackCount: number } => {
+export const findMostBingedShows = (args: FindMostBingedShowsArguments): MostBingedShow[] => {
+  const { shows, count } = args;
   const store: {
     title: string;
     dayCount: number;
@@ -70,7 +71,7 @@ export const findMostBingedShows = (
     });
     tempStore.forEach((entry) =>
       store.push({
-        title: show?.title,
+        title: show.title,
         dayCount: entry.dates.length,
         playbackCount: entry.playbackCount,
         episodesPerDay: entry.playbackCount / entry.dates.length,
@@ -80,11 +81,12 @@ export const findMostBingedShows = (
   const sortedStore = store.sort(
     (previous, current) => current.episodesPerDay - previous.episodesPerDay
   );
-  const mostBingedShow = sortedStore[0];
+  const uniqueSortedStore = uniquifyArray(sortedStore);
+  const mostBingedShows = uniqueSortedStore.map((show) => ({
+    title: show.title,
+    dayCount: show.dayCount,
+    playbackCount: show.playbackCount,
+  }));
 
-  return {
-    title: mostBingedShow?.title,
-    dayCount: mostBingedShow?.dayCount,
-    playbackCount: mostBingedShow?.playbackCount,
-  };
+  return mostBingedShows.slice(0, count);
 };
