@@ -1,9 +1,9 @@
+import { useRouter } from 'next/router';
 import { Button, Container, Overlay, Text, Title } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
 import { useShow } from '@src/hooks';
 import { RawNetflixCSV } from '@src/types';
 import { fetchAndParseCSV, formatNetflixCSV, groupNetflixCSVByTitle } from '@src/util';
-import { IconExternalLink, IconPlayerPlay, IconX } from '@tabler/icons';
+import { IconBuildingCircus, IconPlayerPlay } from '@tabler/icons';
 import useStyles from './HeroSection.styles';
 
 type HeroSectionProps = {
@@ -13,23 +13,14 @@ type HeroSectionProps = {
 export const HeroSection = ({ scrollToGetStartedTarget }: HeroSectionProps) => {
   const { classes, cx } = useStyles();
   const { setShows, latestRetroYear } = useShow();
+  const { push } = useRouter();
 
   const handleSeeExample = async () => {
-    const windowElement = window.open('', '_ blank');
     const csv = await fetchAndParseCSV<RawNetflixCSV>('data/NetflixViewingHistoryExample.csv');
     const formattedData = formatNetflixCSV(csv);
     const shows = groupNetflixCSVByTitle(formattedData);
-    setShows(shows);
-    if (windowElement) windowElement.location.href = '/retro';
-    else {
-      showNotification({
-        title: 'Window Opening Error',
-        message: 'A new tab could not be opened.',
-        color: 'red',
-        autoClose: false,
-        icon: <IconX />,
-      });
-    }
+    await push('/retro');
+    setShows(shows, true);
   };
 
   return (
@@ -70,7 +61,7 @@ export const HeroSection = ({ scrollToGetStartedTarget }: HeroSectionProps) => {
             className={cx(classes.control, classes.secondaryControl)}
             variant="subtle"
             size="lg"
-            leftIcon={<IconExternalLink size={14} />}
+            leftIcon={<IconBuildingCircus size={14} />}
             onClick={handleSeeExample}
           >
             See an example

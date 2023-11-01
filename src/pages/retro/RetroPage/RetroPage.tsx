@@ -8,6 +8,7 @@ import {
   SummaryBlock,
   TotalPlaybacksBlock,
   MissingDataPage,
+  NoShowsPage,
 } from '@src/pages';
 import { PageLayout } from '@src/layouts';
 import useStyles from './RetroPage.styles';
@@ -26,6 +27,7 @@ export const RetroPage = () => {
   );
 
   if (!shows.length) return <MissingDataPage />;
+  if (!filteredShows.length) return <NoShowsPage />;
 
   return (
     <PageLayout>
