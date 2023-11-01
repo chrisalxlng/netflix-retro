@@ -11,7 +11,7 @@ type ShowProviderProps = {
 type ShowProviderValue = {
   shows: Show[];
   latestRetroYear: number;
-  setShows: (shows: Show[]) => void;
+  setShows: (shows: Show[], areShowsExample?: boolean) => void;
 };
 
 export const ShowContext = createContext<ShowProviderValue>({
@@ -22,6 +22,7 @@ export const ShowContext = createContext<ShowProviderValue>({
 
 export const ShowProvider = ({ children }: ShowProviderProps) => {
   const [loading, setLoading] = useState(true);
+  const [isExample, setIsExample] = useState(false);
   const [shows, setStoragedShows] = useLocalStorage<Show[]>({
     key: 'netflix-shows',
     defaultValue: [],
@@ -31,12 +32,9 @@ export const ShowProvider = ({ children }: ShowProviderProps) => {
     },
   });
 
-  const setShows = (updatedShows: Show[]) => {
-    setLoading(true);
-    setStoragedShows(updatedShows);
-  };
-
   const getLatestRetroYear = () => {
+    if (isExample) return 2022;
+
     const mayOfCurrentYear = dayjs().month(4);
     const isAfterMay = dayjs().isAfter(mayOfCurrentYear, 'month');
     const currentYear = dayjs().year();
@@ -44,6 +42,13 @@ export const ShowProvider = ({ children }: ShowProviderProps) => {
     const currentShowYear = isAfterMay ? currentYear : lastYear;
     return currentShowYear;
   };
+
+  const setShows = (updatedShows: Show[], areShowsExample: boolean = false) => {
+    setIsExample(areShowsExample);
+    setLoading(true);
+    setStoragedShows(updatedShows);
+  };
+
   const latestRetroYear = getLatestRetroYear();
 
   useEffect(() => {

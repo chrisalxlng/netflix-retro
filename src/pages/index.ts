@@ -11,3 +11,4 @@ export * from './retro/blocks/SummaryBlock/SummaryBlock';
 
 export * from './error/NotFoundPage/NotFoundPage';
 export * from './error/MissingDataPage/MissingDataPage';
+export * from './error/NoShowsPage/NoShowsPage';
